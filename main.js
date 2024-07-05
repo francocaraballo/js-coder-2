@@ -6,6 +6,7 @@ class Product {
         this.product = product;
         this.brand = brand;
         this.price = price;
+        this.id;
     }
 
 }
@@ -19,42 +20,71 @@ const addProduct = () => {
     return new Product(type, product, brand, price);
 }
 
-
-const product1 = new Product("Sneakers", "Air Max", "Nike", 500);
-const product2 = new Product("Sneakers", "Retro 90", "Adidas", 320);
-const product3 = new Product("Shirt", "T-", "Nike", 100);
-const product4 = new Product("Short", "Swimg", "Topper", 800);
 const products = [];
 
-products.push(product1, product2, product3, product4);
+products.push(new Product("Sneakers", "Air Max", "Nike", 500));
+products.push(new Product("Sneakers", "Retro 90", "Adidas", 320));
+products.push(new Product("Shirt", "T-", "Nike", 100));
+products.push(new Product("Short", "Swimg", "Topper", 800));
 
+const enterProducts = () => {
+
+    let confirmAdd = confirm("Do you want add a product?");
+
+    while (confirmAdd) {
+        products.push(addProduct());
+
+        confirmAdd = confirm("Quieres seguir agregando productos?")
+    } 
+}
+
+enterProducts();
+
+const showListAlert = (arr) => {
+    const productsList = arr.map(e => `${e.type} - ${e.product} - ${e.brand} - $${e.price}`);
+    return productsList.join("\n")
+}
 
 const orderByPriceAsc = () => {
     products.sort((a, b) => a.price - b.price);
-    console.log(products);
+    alert(`Price: Low - High \n${showListAlert(products)}`);
 };
+// orderByPriceAsc();
 
 const orderByPriceDesc = () => {
     products.sort((a,b) => b.price - a.price);
-    console.log(products);
+    alert(`Price: High - Low \n${showListAlert(products)}`);
 };
+// orderByPriceDesc();
 
 const showPricesLowerThan = (n) => {
     const filterResult = products.filter(product => product.price <= n );
-    console.log(filterResult);
+    alert(`Prices lower than $${n}:\n${showListAlert(filterResult)}`);
 };
+// showPricesLowerThan(200);
 
 const showPricesHigherThan = (n) => {
     const filterResult = products.filter(product => product.price >= n );
-    console.log(filterResult);
+    alert(`Prices higher than $${n}:\n${showListAlert(filterResult)}`)
 }
+// showPricesHigherThan(300)
 
 const filterByBrand = (s) => {
-    const filterResult = products.filter(product => product.brand === s);
-    console.log(filterResult);
+    const filterResult = products.filter(product => product.brand.toLowerCase() === s.toLowerCase());
+    alert(`Filter by brand: ${s}\n${showListAlert(filterResult)}`)
 }
+// filterByBrand("Nike")
 
-filterByBrand("Nike")
+const filterByType = (s) => {
+    const filterResult = products.filter(product => product.type.toLowerCase() === s.toLowerCase());
+    alert(`Filter by clothe type: ${s}\n${showListAlert(filterResult)}`)
+}
+// filterByType("Shirt");
+
+const typeClotheAvaible = () => {
+    const map = products.map(e => e.type);
+    return new Set(map);
+} 
 
 
 
