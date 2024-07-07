@@ -71,7 +71,6 @@ const enterProductsToStock = () => {
 const convertToList = (arr) => {
     const productsList = arr.map(e => `${e.name} - $${e.price}`);
     return productsList.join("\n");
-
 }
 
 const showListAndQuantity = (arr) => {
@@ -113,9 +112,9 @@ const totalToPay = (cart) => {
 
 const checkout = (cart) => {
     alert(`Productos en el carrito:\n\n${showListAndQuantity(cart)}\n\nTotal: $${totalToPay(cart)}`);
+    alert("Pago realizada con exito! Gracias por su compra");
 }
 buyProducts(products, shopCart);
-
 
 // Filter functions
 
