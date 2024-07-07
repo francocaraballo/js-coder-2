@@ -51,8 +51,8 @@ const products = [
 const shopCart = [];
 
 const newProduct = () => {
-    const name = prompt("Enter product name: ");
-    const price = parseFloat(prompt("Enter price: "));
+    const name = prompt("Ingrese el producto: ");
+    const price = parseFloat(prompt("Ingrese el precio: "));
 
     return new Product(name, price);
 }
@@ -98,7 +98,7 @@ const addToCart = (product, quantity) => {
         product.quantity += quantity;
         shopCart.push(product);
     }
-
+    console.log(shopCart);
 }
 
 buyProducts(products);
