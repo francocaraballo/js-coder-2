@@ -48,21 +48,22 @@ const products = [
     }
 ];
 
-const addProduct = () => {
+const shopCart = [];
+
+const newProduct = () => {
     const name = prompt("Enter product name: ");
     const price = parseFloat(prompt("Enter price: "));
 
     return new Product(name, price);
 }
 
-const enterProducts = () => {
+const enterProductsToStock = () => {
 
     alert("A continuacion, ingrese los datos del producto");
     let confirmAdd = true;
 
     while (confirmAdd) {
-        products.push(addProduct());
-
+        products.push(newProduct());
         confirmAdd = confirm("Quieres seguir agregando productos?")
     } 
 }
@@ -71,6 +72,55 @@ const convertToList = (arr) => {
     const productsList = arr.map(e => `${e.name} - $${e.price}`);
     return productsList.join("\n")
 }
+
+const buyProducts = (products) => {
+    let continueBuy = true;
+
+    do {
+        let productName = prompt(`Que producto desea comprar?\n\n${convertToList(products)}`)
+        let productQuantity = parseInt(prompt("Cuantas unidades quiere agregar?"));
+
+        const product = products.find(i => i.name.toLowerCase() === productName.toLowerCase());
+        addToCart(product, productQuantity);
+
+        continueBuy = confirm("Queres seguir comprando?")
+    } while (continueBuy);
+    console.log(shopCart);
+
+}
+
+const addToCart = (product, quantity) => {
+
+    const itemCart = shopCart.find(item => item.name.toLowerCase() === product.name.toLowerCase());
+    if(itemCart) {
+        product.quantity += quantity;
+    } else {
+        product.quantity += quantity;
+        shopCart.push(product);
+    }
+
+}
+
+buyProducts(products);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Filter functions
 
@@ -92,7 +142,7 @@ const showPricesLowerThan = (n) => {
     const filterResult = products.filter(product => product.price <= n );
     alert(`Prices lower than $${n}:\n\n${convertToList(filterResult)}`);
 };
-showPricesLowerThan(100);
+// showPricesLowerThan(100);
 
 const showPricesHigherThan = (n) => {
     const filterResult = products.filter(product => product.price >= n );
