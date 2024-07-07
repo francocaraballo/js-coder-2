@@ -70,10 +70,16 @@ const enterProductsToStock = () => {
 
 const convertToList = (arr) => {
     const productsList = arr.map(e => `${e.name} - $${e.price}`);
-    return productsList.join("\n")
+    return productsList.join("\n");
+
 }
 
-const buyProducts = (products) => {
+const showListAndQuantity = (arr) => {
+    const productsList = arr.map(e => `${e.name} - ${e.quantity} x $${e.price}`);
+    return productsList.join("\n");
+}
+
+const buyProducts = (products, cart) => {
     let continueBuy = true;
 
     do {
@@ -82,11 +88,9 @@ const buyProducts = (products) => {
 
         const product = products.find(i => i.name.toLowerCase() === productName.toLowerCase());
         addToCart(product, productQuantity);
-
         continueBuy = confirm("Queres seguir comprando?")
     } while (continueBuy);
-    console.log(shopCart);
-
+    checkout(cart);
 }
 
 const addToCart = (product, quantity) => {
@@ -98,28 +102,19 @@ const addToCart = (product, quantity) => {
         product.quantity += quantity;
         shopCart.push(product);
     }
-    console.log(shopCart);
 }
 
-buyProducts(products);
+const totalToPay = (cart) => {
+    let totalPerItem = cart.map(item => item.price * item.quantity);
+    let totalAmount = totalPerItem.reduce((acc, num) => acc + num, 0);
 
+    return totalAmount;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const checkout = (cart) => {
+    alert(`Productos en el carrito:\n\n${showListAndQuantity(cart)}\n\nTotal: $${totalToPay(cart)}`);
+}
+buyProducts(products, shopCart);
 
 
 // Filter functions
